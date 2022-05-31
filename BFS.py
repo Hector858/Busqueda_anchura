@@ -25,6 +25,10 @@ class Grafo:
         Método que agrega una arista al grafo.
         
         Si el primer grafo no se encuentra dirigido se pasa al siguiente
+   imprimir_lista_adyacencia(self):
+        Método que imprime la lista de adyacencia.
+        
+        Imprime la lista de adyacencia de los nodos por cada una de sus llaves.
     """
     # Constructor
     def __init__(self, numero_de_nodos, dirigido=True):#self es uno mismo
@@ -70,6 +74,7 @@ class Grafo:
                     Nodo 2 o de fin
             peso : int 
                     Peso de la arista
+                    
                     Este atributo puede tener un valor opcional (proporcionado por uno mismo)
         '''
         #Agregar una arista del nodo 1 a la lista de adyacencia
@@ -79,3 +84,33 @@ class Grafo:
         if not self.m_dirigido:
             #Agregar una arista del nodo 2 de la lista de adyacencia
             self.m_lista_adyacencia[nodo2].add((nodo1, peso))  
+        
+    # Imprimir la representación del grafo
+    def imprimir_lista_adyacencia(self):
+        ''' 
+        Método que imprime la lista de adyacencia por medio de una matriz.
+        
+        Imprime la lista de adyacencia de los nodos por cada una de sus llaves.
+        '''
+        #Realiza un recorrido en la lista de adyacencia a través de sus llaves
+        for llave in self.m_lista_adyacencia.keys():
+            #Imprime cada uno de los nodos que se encuentren en la lista de adyacencia
+            #colocan donde se dirigen los nodos y su peso
+            print("nodo", llave, ": ", self.m_lista_adyacencia[llave])
+            
+#Main de la clase
+if __name__ == "__main__":
+        
+    # Crea una instancia de la clase `Grafo`
+    # Este grafo es no dirigido y tiene 5 nodos
+    g = Grafo(5, dirigido=False)
+    
+    # Agrega las aristas del grafo
+    g.agregar_arista(0,1)# Agrega las aristas (0,1) con peso=1
+    g.agregar_arista(0,2)# Agrega las aristas (0,2) con peso=1
+    g.agregar_arista(1,2)# Agrega las aristas (1,2) con peso=1
+    g.agregar_arista(1,4)# Agrega las aristas (1,4) con peso=1
+    g.agregar_arista(2,3)# Agrega las aristas (2,3) con peso=1
+    
+    # Imprime la lista de adyacencia en el formulario del nodo
+    g.imprimir_lista_adyacencia()
