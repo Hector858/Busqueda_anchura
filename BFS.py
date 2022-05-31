@@ -44,6 +44,13 @@ class Grafo:
         Método que permite recorrer el grafo en anchura.
         
         Genera colas y listas de nodos visitados.
+   Main
+   -------- 
+   __main__
+        Main de la clase Grafo
+        
+        Imprime los nodos nodos asignados y muestra el recorrido
+        
     """
     # Constructor
     def __init__(self, numero_de_nodos, dirigido=True):#self es uno mismo
@@ -154,6 +161,12 @@ class Grafo:
             
 #Main de la clase
 if __name__ == "__main__":
+    '''
+        Main de la clase Grafo.
+        
+        Imprime los nodos nodos asignados y muestra el recorrido.
+        
+    '''
         
     # Crea una instancia de la clase "Grafo"
     # Este grafo es no dirigido y tiene 5 nodos
