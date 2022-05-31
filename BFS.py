@@ -3,7 +3,7 @@ from queue import Queue
 
 class Grafo:
     """
-    Una clase que representa los algoritmos de búsqueda 
+    Una clase que representa el algoritmo de búsqueda por anchura
     para recorrer los nodos de un grafo
 
     ...
@@ -14,7 +14,17 @@ class Grafo:
             indica el número de nodos que va a llevar el grafo
     dirigido : boolean
             Si el grafo se encuentra en dirigido (True) o no dirigido (False)
-
+            
+    nodo1 : int 
+            Nodo 1 o de inicio
+    nodo2 : int
+            Nodo 2 o de fin
+    peso : int 
+            Peso de la arista
+            
+            Este atributo puede tener un valor opcional (proporcionado por uno mismo)
+    nodo_inicio : int  
+            Nodo inicial del recorrido
     Métodos
     -------
     __init__(self, numero_de_nodos, dirigido=Treu):
@@ -29,6 +39,11 @@ class Grafo:
         Método que imprime la lista de adyacencia.
         
         Imprime la lista de adyacencia de los nodos por cada una de sus llaves.
+        
+   def bfs_traversal(self, iniciar_nodo):
+        Método que permite recorrer el grafo en anchura.
+        
+        Genera colas y listas de nodos visitados.
     """
     # Constructor
     def __init__(self, numero_de_nodos, dirigido=True):#self es uno mismo
@@ -57,7 +72,7 @@ class Grafo:
             node: set() for node in self.m_nodos#Hace un ciclo de repetición en los nodos para setearlos cada uno
             }
         
-    # Agrega una arista al grafo
+    # Función que agrega una arista al grafo
     def agregar_arista(self, nodo1, nodo2, peso=1):
         '''
         Método que agrega una arista al grafo.
@@ -85,7 +100,7 @@ class Grafo:
             #Agregar una arista del nodo 2 de la lista de adyacencia
             self.m_lista_adyacencia[nodo2].add((nodo1, peso))  
         
-    # Imprimir la representación del grafo
+    # Función que imprime la representación del grafo
     def imprimir_lista_adyacencia(self):
         ''' 
         Método que imprime la lista de adyacencia por medio de una matriz.
@@ -98,19 +113,64 @@ class Grafo:
             #colocan donde se dirigen los nodos y su peso
             print("nodo", llave, ": ", self.m_lista_adyacencia[llave])
             
+    # Función que imprime el recorrido BFS
+    def recorrido_bfs(self, nodo_inicio):
+        '''
+        Método que realiza un recorrido del grafo en anchura.
+        
+        Genera colas y listas de nodos visitados.
+        
+            Parámetros:
+            ----------
+            nodo_inicio : int  
+                Nodo inicial del recorrido
+        '''
+        #Inicializa la lista de los nodos visitados
+        #Conjunto vacío de nodos visitados
+        visitado = set()
+        #Inicializa la cola del grafo
+        cola = Queue()
+
+        # Colcoa el nodo inicial a la cola
+        cola.put(nodo_inicio)
+        # Agrega el nodo inicial a la lista visitada
+        visitado.add(nodo_inicio)
+        
+        #Realiza un bucle mientras la cola no este vacía
+        while not cola.empty():
+            # Saca el primer nodo de la cola
+            nodo_actual = cola.get()
+            #Imprime el nodo actual
+            print(nodo_actual, end = " ")
+
+            # Realiza un recorrido de toda la lista de adyacencia del nodo actual para el siguiente nodo
+            for (siguiente_nodo, peso) in self.m_lista_adyacencia[nodo_actual]:
+                #indica que si el nodo siguiente no ha sido visitado
+                if siguiente_nodo not in visitado:
+                    #Coloca el siguiente nodo a la cola
+                    cola.put(siguiente_nodo)
+                    #Agregar el siguiente nodo a la lista de nodos visitados
+                    visitado.add(siguiente_nodo)
+            
 #Main de la clase
 if __name__ == "__main__":
         
-    # Crea una instancia de la clase `Grafo`
+    # Crea una instancia de la clase "Grafo"
     # Este grafo es no dirigido y tiene 5 nodos
     g = Grafo(5, dirigido=False)
     
     # Agrega las aristas del grafo
-    g.agregar_arista(0,1)# Agrega las aristas (0,1) con peso=1
-    g.agregar_arista(0,2)# Agrega las aristas (0,2) con peso=1
-    g.agregar_arista(1,2)# Agrega las aristas (1,2) con peso=1
-    g.agregar_arista(1,4)# Agrega las aristas (1,4) con peso=1
-    g.agregar_arista(2,3)# Agrega las aristas (2,3) con peso=1
+    g.agregar_arista(0,1)# Agrega la arista (0,1) con peso=1
+    g.agregar_arista(0,2)# Agrega la arista (0,2) con peso=1
+    g.agregar_arista(1,2)# Agrega la arista (1,2) con peso=1
+    g.agregar_arista(1,4)# Agrega la arista (1,4) con peso=1
+    g.agregar_arista(2,3)# Agrega la arista (2,3) con peso=1
     
     # Imprime la lista de adyacencia en el formulario del nodo
     g.imprimir_lista_adyacencia()
+    
+    print ("A continuación se muestra el primer recorrido en anchura"
+                    " (empezando por el vértice 0)")
+    #Imprime el recorrido del grafo desde el vértice 0
+    g.recorrido_bfs(0)
+    print()
